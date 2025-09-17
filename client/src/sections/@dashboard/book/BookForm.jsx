@@ -38,7 +38,7 @@ const BookForm = ({
   const [genres, setGenres] = useState([]);
 
   const getAllAuthors = () => {
-    axios.get('http://172.236.149.69:5000/api/author/getAll')
+    axios.get('https://sma-library.duckdns.org/api/api/author/getAll')
       .then((response) => {
         // handle success
         console.log(response.data)
@@ -52,7 +52,7 @@ const BookForm = ({
   }
 
   const getAllGenres = () => {
-    axios.get('http://172.236.149.69:5000/api/genre/getAll')
+    axios.get('https://sma-library.duckdns.org/api/api/genre/getAll')
       .then((response) => {
         // handle success
         console.log(response.data)

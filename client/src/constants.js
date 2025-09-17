@@ -1,4 +1,4 @@
-const backendApiUrl = "http://172.236.149.69:5000/api";
+const backendApiUrl = "https://sma-library.duckdns.org/api/api";
 
 const routes = {
   AUTHOR: "author",

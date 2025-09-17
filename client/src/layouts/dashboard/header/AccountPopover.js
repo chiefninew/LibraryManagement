@@ -11,7 +11,7 @@ export default function AccountPopover() {
 
   const logoutUser = () => {
     handleClose();
-    axios.get(`http://172.236.149.69:5000/api/auth/logout`, { withCredentials: true })
+    axios.get(`https://sma-library.duckdns.org/api/api/auth/logout`, { withCredentials: true })
       .then((response) => {
         // handle success
         if (response.status === 200) {
