@@ -43,7 +43,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Use CORS for Cross Origin Resource Sharing
 app.use(cors({
-  origin: "https://sma-library.duckdns.org",
+  origin: "https://sma-library.duckdns.org/api",
   credentials: true
 }))
 
