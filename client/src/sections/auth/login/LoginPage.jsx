@@ -43,7 +43,7 @@ export default function LoginPage() {
     if (email === "" || password === "") {
       toast.error("Please enter email and password");
     } else {
-      axios.post(`http://localhost:8080/api/auth/login`, { email, password }, { withCredentials: false })
+      axios.post(`http://172.236.149.69:5000/api/auth/login`, { email, password }, { withCredentials: false })
         .then((response) => {
           // handle success
           if (response.status === 200) {

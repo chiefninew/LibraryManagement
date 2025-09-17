@@ -33,7 +33,7 @@ const BorrowalForm = ({
   const [books, setBooks] = useState([]);
 
   const getAllMembers = () => {
-    axios.get('http://localhost:8080/api/user/getAllMembers')
+    axios.get('http://172.236.149.69:5000/api/user/getAllMembers')
       .then((response) => {
         // handle success
         console.log(response.data)
@@ -52,7 +52,7 @@ const BorrowalForm = ({
   }
 
   const getAllBooks = () => {
-    axios.get('http://localhost:8080/api/book/getAll')
+    axios.get('http://172.236.149.69:5000/api/book/getAll')
       .then((response) => {
         // handle success
         console.log(response.data)

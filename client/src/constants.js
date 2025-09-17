@@ -1,4 +1,4 @@
-const backendApiUrl = "http://localhost:8080/api";
+const backendApiUrl = "http://172.236.149.69:5000/api";
 
 const routes = {
   AUTHOR: "author",
