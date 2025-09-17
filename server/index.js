@@ -71,13 +71,13 @@ const initializePassport = require("./passport-config");
 initializePassport(passport);
 
 // Implement routes for REST API
-app.use("/api/auth", authRouter)
-app.use("/api/book", bookRouter);
-app.use("/api/author", authorRouter);
-app.use("/api/borrowal", borrowalRouter);
-app.use("/api/genre", genreRouter);
-app.use("/api/user", userRouter); 
-app.use("/api/review", reviewRouter);
+app.use("/auth", authRouter)
+app.use("/book", bookRouter);
+app.use("/author", authorRouter);
+app.use("/borrowal", borrowalRouter);
+app.use("/genre", genreRouter);
+app.use("/user", userRouter); 
+app.use("/review", reviewRouter);
 
 app.get('/', (req, res) => res.send('Welcome to Library Management System'));
 
