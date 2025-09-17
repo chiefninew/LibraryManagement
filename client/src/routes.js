@@ -3,6 +3,7 @@ import LibraryApp from "./layouts/dashboard";
 import AuthorPage from "./sections/@dashboard/author/AuthorPage";
 import LoginPage from "./sections/auth/login/LoginPage";
 import Page404 from "./pages/Page404";
+import LogsPage from "./sections/@dashboard/logs/LogsPage";
 import BorrowalPage from "./sections/@dashboard/borrowal/BorrowalPage";
 import BookPage from "./sections/@dashboard/book/BookPage";
 import DashboardAppPage from "./sections/@dashboard/app/DashboardAppPage";
@@ -21,6 +22,7 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard" />, index: true },
         { path: "dashboard", element: <DashboardAppPage /> },
+        { path: "logs", element: <LogsPage /> },
         { path: "authors", element: <AuthorPage /> },
         { path: "books", element: <BookPage /> },
         { path: "borrowals", element: <BorrowalPage /> },
