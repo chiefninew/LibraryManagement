@@ -33,7 +33,7 @@ const BorrowalForm = ({
   const [books, setBooks] = useState([]);
 
   const getAllMembers = () => {
-    axios.get('https://sma-library.duckdns.org/api/api/user/getAllMembers')
+    axios.get('https://sma-library.duckdns.org/api/user/getAllMembers')
       .then((response) => {
         // handle success
         console.log(response.data)
@@ -52,7 +52,7 @@ const BorrowalForm = ({
   }
 
   const getAllBooks = () => {
-    axios.get('https://sma-library.duckdns.org/api/api/book/getAll')
+    axios.get('https://sma-library.duckdns.org/api/book/getAll')
       .then((response) => {
         // handle success
         console.log(response.data)
