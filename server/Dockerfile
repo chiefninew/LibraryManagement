@@ -15,6 +15,7 @@ COPY . .
 
 ARG BASE_URL
 ENV BASE_URL=$BASE_URL
+ENV TZ=Asia/Manila
 
 # Expose the port your app listens on
 EXPOSE 5000
