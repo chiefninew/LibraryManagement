@@ -74,7 +74,7 @@ const GenrePage = () => {
   // API operations
 
   const getAllGenres = () => {
-    axios.get(apiUrl(routes.GENRE, methods.GET_ALL), { withCredentials: true })
+    axios.get(apiUrl(routes.GENRE, methods.GET_ALL))
       .then((response) => {
         // handle success
         console.log(response.data)
@@ -88,7 +88,7 @@ const GenrePage = () => {
   }
 
   const addGenre = () => {
-    axios.post(apiUrl(routes.GENRE, methods.POST), genre, { withCredentials: true })
+    axios.post(apiUrl(routes.GENRE, methods.POST), genre)
       .then((response) => {
         console.log(response.data);
         toast.success("Genre added");
@@ -103,7 +103,7 @@ const GenrePage = () => {
   }
 
   const updateGenre = () => {
-    axios.put(apiUrl(routes.GENRE, methods.PUT, selectedGenreId), genre, { withCredentials: true })
+    axios.put(apiUrl(routes.GENRE, methods.PUT, selectedGenreId), genre)
       .then((response) => {
         console.log(response.data);
         toast.success("Genre updated");
@@ -119,7 +119,7 @@ const GenrePage = () => {
   }
 
   const deleteGenre = (genreId) => {
-    axios.delete(apiUrl(routes.GENRE, methods.DELETE, genreId), { withCredentials: true })
+    axios.delete(apiUrl(routes.GENRE, methods.DELETE, genreId))
       .then((response) => {
         toast.success("Genre deleted");
         handleCloseDialog();

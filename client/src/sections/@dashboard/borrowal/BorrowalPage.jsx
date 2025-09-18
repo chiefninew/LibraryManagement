@@ -80,7 +80,7 @@ const BorrowalPage = () => {
   // API operations=
 
   const getAllBorrowals = () => {
-    axios.get(apiUrl(routes.BORROWAL, methods.GET_ALL), { withCredentials: true })
+    axios.get(apiUrl(routes.BORROWAL, methods.GET_ALL))
       .then((response) => {
         // handle success
         console.log(response.data)
@@ -98,7 +98,7 @@ const BorrowalPage = () => {
   }
 
   const addBorrowal = () => {
-    axios.post(apiUrl(routes.BORROWAL, methods.POST), borrowal, { withCredentials: true })
+    axios.post(apiUrl(routes.BORROWAL, methods.POST), borrowal)
       .then((response) => {
         toast.success("Borrowal added");
         console.log(response.data);
@@ -113,7 +113,7 @@ const BorrowalPage = () => {
   }
 
   const updateBorrowal = () => {
-    axios.put(apiUrl(routes.BORROWAL, methods.PUT, selectedBorrowalId), borrowal, { withCredentials: true })
+    axios.put(apiUrl(routes.BORROWAL, methods.PUT, selectedBorrowalId), borrowal)
       .then((response) => {
         toast.success("Borrowal updated");
         console.log(response.data);
@@ -129,7 +129,7 @@ const BorrowalPage = () => {
   }
 
   const deleteBorrowal = () => {
-    axios.delete(apiUrl(routes.BORROWAL, methods.PUT, selectedBorrowalId), { withCredentials: true })
+    axios.delete(apiUrl(routes.BORROWAL, methods.PUT, selectedBorrowalId))
       .then((response) => {
         toast.success("Borrowal deleted");
         handleCloseDialog();

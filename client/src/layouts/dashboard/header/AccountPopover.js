@@ -11,7 +11,7 @@ export default function AccountPopover() {
 
   const logoutUser = () => {
     handleClose();
-    axios.get(`${baseURL}/auth/logout`, { withCredentials: true })
+    axios.get(`${baseURL}/auth/logout`)
       .then((response) => {
         // handle success
         if (response.status === 200) {

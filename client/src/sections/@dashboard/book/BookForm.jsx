@@ -38,7 +38,7 @@ const BookForm = ({
   const [genres, setGenres] = useState([]);
 
   const getAllAuthors = () => {
-    axios.get(`${baseURL}/author/getAll`, { withCredentials: true })
+    axios.get(`${baseURL}/author/getAll`)
       .then((response) => {
         // handle success
         console.log(response.data)
@@ -52,7 +52,7 @@ const BookForm = ({
   }
 
   const getAllGenres = () => {
-    axios.get(`${baseURL}/genre/getAll`, { withCredentials: true })
+    axios.get(`${baseURL}/genre/getAll`)
       .then((response) => {
         // handle success
         console.log(response.data)

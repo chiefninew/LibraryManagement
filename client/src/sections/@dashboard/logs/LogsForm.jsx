@@ -33,7 +33,7 @@ const LogsForm = ({
   const [books, setBooks] = useState([]);
 
   const getAllMembers = () => {
-    axios.get(`${baseURL}/user/getAllMembers`, { withCredentials: true })
+    axios.get(`${baseURL}/user/getAllMembers`)
       .then((response) => {
         // handle success
         console.log(response.data)
@@ -52,7 +52,7 @@ const LogsForm = ({
   }
 
   const getAllBooks = () => {
-    axios.get(`${baseURL}/book/getAll`, { withCredentials: true })
+    axios.get(`${baseURL}/book/getAll`)
       .then((response) => {
         // handle success
         console.log(response.data)

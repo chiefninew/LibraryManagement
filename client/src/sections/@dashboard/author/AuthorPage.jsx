@@ -77,7 +77,7 @@ const AuthorPage = () => {
   // API operations
 
   const getAllAuthors = () => {
-    axios.get(apiUrl(routes.AUTHOR, methods.GET_ALL), { withCredentials: true })
+    axios.get(apiUrl(routes.AUTHOR, methods.GET_ALL))
       .then((response) => {
         // handle success
         console.log(response.data)
@@ -91,7 +91,7 @@ const AuthorPage = () => {
   }
 
   const addAuthor = () => {
-    axios.post(apiUrl(routes.AUTHOR, methods.POST), author, { withCredentials: true })
+    axios.post(apiUrl(routes.AUTHOR, methods.POST), author)
       .then((response) => {
         toast.success("Author added");
         console.log(response.data);
@@ -106,7 +106,7 @@ const AuthorPage = () => {
   }
 
   const updateAuthor = () => {
-    axios.put(apiUrl(routes.AUTHOR, methods.PUT, selectedAuthorId), author, { withCredentials: true })
+    axios.put(apiUrl(routes.AUTHOR, methods.PUT, selectedAuthorId), author)
       .then((response) => {
         toast.success("Author updated");
         console.log(response.data);
@@ -122,7 +122,7 @@ const AuthorPage = () => {
   }
 
   const deleteAuthor = (authorId) => {
-    axios.delete(apiUrl(routes.AUTHOR, methods.DELETE, authorId), { withCredentials: true })
+    axios.delete(apiUrl(routes.AUTHOR, methods.DELETE, authorId))
       .then((response) => {
         toast.success("Author deleted");
         handleCloseDialog();
