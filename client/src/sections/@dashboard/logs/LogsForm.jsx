@@ -33,7 +33,7 @@ const LogsForm = ({
   const [books, setBooks] = useState([]);
 
   const getAllMembers = () => {
-    axios.get('https://sma-library.duckdns.org/api/user/getAllMembers')
+    axios.get(`${baseURL}/user/getAllMembers`, { withCredentials: true })
       .then((response) => {
         // handle success
         console.log(response.data)
@@ -52,7 +52,7 @@ const LogsForm = ({
   }
 
   const getAllBooks = () => {
-    axios.get('https://sma-library.duckdns.org/api/book/getAll')
+    axios.get(`${baseURL}/book/getAll`, { withCredentials: true })
       .then((response) => {
         // handle success
         console.log(response.data)

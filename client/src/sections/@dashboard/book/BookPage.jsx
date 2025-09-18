@@ -53,7 +53,7 @@ const BookPage = () => {
   // API operations
 
   const getAllBooks = () => {
-    axios.get(apiUrl(routes.BOOK, methods.GET_ALL))
+    axios.get(apiUrl(routes.BOOK, methods.GET_ALL), { withCredentials: true })
       .then((response) => {
         // handle success
         console.log(response.data)
@@ -67,7 +67,7 @@ const BookPage = () => {
   }
 
   const addBook = () => {
-    axios.post(apiUrl(routes.BOOK, methods.POST), book)
+    axios.post(apiUrl(routes.BOOK, methods.POST), book, { withCredentials: true })
       .then((response) => {
         toast.success("Book added");
         console.log(response.data);
@@ -82,7 +82,7 @@ const BookPage = () => {
   }
 
   const updateBook = () => {
-    axios.put(apiUrl(routes.BOOK, methods.PUT, selectedBookId), book)
+    axios.put(apiUrl(routes.BOOK, methods.PUT, selectedBookId), book, { withCredentials: true })
       .then((response) => {
         toast.success("Book updated");
         console.log(response.data);
@@ -98,7 +98,7 @@ const BookPage = () => {
   }
 
   const deleteBook = (bookId) => {
-    axios.delete(apiUrl(routes.BOOK, methods.DELETE, bookId))
+    axios.delete(apiUrl(routes.BOOK, methods.DELETE, bookId), { withCredentials: true })
       .then((response) => {
         toast.success("Book deleted");
         handleCloseDialog();

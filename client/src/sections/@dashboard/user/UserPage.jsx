@@ -82,7 +82,7 @@ const UserPage = () => {
   // API operations
 
   const getAllUsers = () => {
-    axios.get(apiUrl(routes.USER, methods.GET_ALL))
+    axios.get(apiUrl(routes.USER, methods.GET_ALL), { withCredentials: true })
       .then((response) => {
         // handle success
         console.log(response.data);
@@ -96,7 +96,7 @@ const UserPage = () => {
   };
 
   const addUser = () => {
-    axios.post(apiUrl(routes.USER, methods.POST), user)
+    axios.post(apiUrl(routes.USER, methods.POST), user, { withCredentials: true })
       .then((response) => {
         console.log(response.data);
         toast.success("User added");
@@ -115,7 +115,7 @@ const UserPage = () => {
   };
 
   const updateUser = () => {
-    axios.put(apiUrl(routes.USER, methods.PUT, selectedUserId), user)
+    axios.put(apiUrl(routes.USER, methods.PUT, selectedUserId), user, { withCredentials: true })
       .then((response) => {
         console.log(response.data);
         toast.success("User updated");
@@ -131,7 +131,7 @@ const UserPage = () => {
   };
 
   const deleteUser = (userId) => {
-    axios.delete(apiUrl(routes.USER, methods.DELETE, userId))
+    axios.delete(apiUrl(routes.USER, methods.DELETE, userId), { withCredentials: true })
       .then((response) => {
         toast.success("User deleted");
         handleCloseDialog();

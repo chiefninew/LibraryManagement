@@ -13,6 +13,9 @@ RUN npm install --only=production
 # Copy application source code
 COPY . .
 
+ARG BASE_URL
+ENV BASE_URL=$BASE_URL
+
 # Expose the port your app listens on
 EXPOSE 5000
 

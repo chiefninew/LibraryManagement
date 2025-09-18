@@ -1,84 +1,83 @@
-// Import required modules
-const express = require('express');
-const cors = require('cors');
-const logger = require('morgan')
+// server.js
+
+const express = require("express");
+const cors = require("cors");
+const logger = require("morgan");
 const passport = require("passport");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 // Import routers
-const authRouter = require("./routes/authRouter")
-const bookRouter = require("./routes/bookRouter")
-const authorRouter = require("./routes/authorRouter")
-const borrowalRouter = require("./routes/borrowalRouter")
-const genreRouter = require("./routes/genreRouter") 
-const userRouter = require("./routes/userRouter") 
-const reviewRouter = require("./routes/reviewRouter")
+const authRouter = require("./routes/authRouter");
+const bookRouter = require("./routes/bookRouter");
+const authorRouter = require("./routes/authorRouter");
+const borrowalRouter = require("./routes/borrowalRouter");
+const genreRouter = require("./routes/genreRouter");
+const userRouter = require("./routes/userRouter");
+const reviewRouter = require("./routes/reviewRouter");
 
-// Configure dotenv for environment variables in production
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
-
-// Setup express
+// Initialize express
 const app = express();
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 5000;
 
-// Use morgan for logging
-app.use(logger("dev"))
+// Middleware
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-// Set middleware to process form data
-app.use(express.urlencoded({extended: false}));
+// --- CORS setup ---
+const allowedOrigin =
+  process.env.NODE_ENV === "production" ? process.env.BASE_URL : "http://localhost:3000";
 
-// Connect to DB
-const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-  .then(() => {
-    console.log('Connected to DB on MongoDB Atlas')
-  })
-  .catch((err) => console.log('DB connection error', err));
-
-// Use CORS for Cross Origin Resource Sharing
-app.use(cors({
-  origin: "https://sma-library.duckdns.org",
-  credentials: true
-}))
-
-// Set middleware to manage sessions
 app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
+  cors({
+    origin: allowedOrigin,
+    credentials: true, // allow cookies/sessions
   })
 );
 
-// Parse cookies used for session management
-app.use(cookieParser(process.env.SESSION_SECRET));
+// --- Session setup ---
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "devsecret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // HTTPS only in prod
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    },
+  })
+);
 
-// Parse JSON objects in request bodies
-app.use(express.json())
-
-// Use passport authentication middleware
+// --- Passport setup ---
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Initialise passport as authentication middleware
 const initializePassport = require("./passport-config");
 initializePassport(passport);
 
-// Implement routes for REST API
-app.use("/auth", authRouter)
+// --- MongoDB connection ---
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Connected to MongoDB Atlas"))
+  .catch((err) => console.log("DB connection error", err));
+
+// --- Routes ---
+app.use("/auth", authRouter);
 app.use("/book", bookRouter);
 app.use("/author", authorRouter);
 app.use("/borrowal", borrowalRouter);
 app.use("/genre", genreRouter);
-app.use("/user", userRouter); 
+app.use("/user", userRouter);
 app.use("/review", reviewRouter);
 
-app.get('/', (req, res) => res.send('Welcome to Library Management System'));
+app.get("/", (req, res) => res.send("Welcome to Library Management System"));
 
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}!`));
+// --- Start server ---
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

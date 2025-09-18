@@ -1,4 +1,4 @@
-const backendApiUrl = "https://sma-library.duckdns.org/api";
+const baseURL = process.env.REACT_APP_BASE_URL
 
 const routes = {
   AUTHOR: "author",
@@ -17,6 +17,6 @@ const methods = {
   DELETE: "delete"
 };
 
-const apiUrl = (route, method, id = "") => `${backendApiUrl}/${route}/${method}${id && `/${id}`}`;
+const apiUrl = (route, method, id = "") => `${baseURL}/${route}/${method}${id && `/${id}`}`;
 
-module.exports = { routes, methods, apiUrl };
+module.exports = { routes, methods, apiUrl, baseURL };

@@ -80,7 +80,7 @@ const LogsPage = () => {
   // API operations=
 
   const getAllBorrowals = () => {
-    axios.get(apiUrl(routes.BORROWAL, methods.GET_ALL))
+    axios.get(apiUrl(routes.BORROWAL, methods.GET_ALL), { withCredentials: true })
       .then((response) => {
         // handle success
         console.log(response.data)
@@ -98,7 +98,7 @@ const LogsPage = () => {
   }
 
   const addBorrowal = () => {
-    axios.post(apiUrl(routes.BORROWAL, methods.POST), borrowal)
+    axios.post(apiUrl(routes.BORROWAL, methods.POST), borrowal, { withCredentials: true })
       .then((response) => {
         toast.success("Borrowal added");
         console.log(response.data);
@@ -113,7 +113,7 @@ const LogsPage = () => {
   }
 
   const updateBorrowal = () => {
-    axios.put(apiUrl(routes.BORROWAL, methods.PUT, selectedBorrowalId), borrowal)
+    axios.put(apiUrl(routes.BORROWAL, methods.PUT, selectedBorrowalId), borrowal, { withCredentials: true })
       .then((response) => {
         toast.success("Borrowal updated");
         console.log(response.data);
@@ -129,7 +129,7 @@ const LogsPage = () => {
   }
 
   const deleteBorrowal = () => {
-    axios.delete(apiUrl(routes.BORROWAL, methods.PUT, selectedBorrowalId))
+    axios.delete(apiUrl(routes.BORROWAL, methods.PUT, selectedBorrowalId), { withCredentials: true })
       .then((response) => {
         toast.success("Borrowal deleted");
         handleCloseDialog();
@@ -203,20 +203,20 @@ const LogsPage = () => {
 
   return (<>
     <Helmet>
-      <title>Borrowals</title>
+      <title>Logs</title>
     </Helmet>
 
 
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h3" gutterBottom>
-          Borrowals
+          Logs
         </Typography>
         <Button variant="contained" onClick={() => {
           setIsUpdateForm(false);
           handleOpenModal();
         }} startIcon={<Iconify icon="eva:plus-fill"/>}>
-          New Borrowal
+          New Logs
         </Button>
       </Stack>
       {isTableLoading ? <Grid style={{"textAlign": "center"}}><CircularProgress size="lg"/></Grid> : <Card>
