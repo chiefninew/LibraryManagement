@@ -29,12 +29,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // --- CORS setup ---
-const allowedOrigin =
-  process.env.NODE_ENV === "production" ? process.env.BASE_URL : "http://localhost:3000";
-
 app.use(
   cors({
-    origin: allowedOrigin,
+    origin: "http://localhost:3000",
     credentials: true, // allow cookies/sessions
   })
 );
