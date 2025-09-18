@@ -55,9 +55,7 @@ const getAllLogs = async (req, res) => {
 
 const addLog = async (req, res) => {
   const newLog = {
-    ...req.body,
-    date: Date.now,
-    timeIn: Date.now
+    ...req.body
   }
   console.log(newLog)
   Log.create(newLog, (err, log) => {
