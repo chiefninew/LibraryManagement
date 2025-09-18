@@ -203,20 +203,20 @@ const LogsPage = () => {
 
   return (<>
     <Helmet>
-      <title>Borrowals</title>
+      <title>Logs</title>
     </Helmet>
 
 
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h3" gutterBottom>
-          Borrowals
+          Logs
         </Typography>
         <Button variant="contained" onClick={() => {
           setIsUpdateForm(false);
           handleOpenModal();
         }} startIcon={<Iconify icon="eva:plus-fill"/>}>
-          New Borrowal
+          New Logs
         </Button>
       </Stack>
       {isTableLoading ? <Grid style={{"textAlign": "center"}}><CircularProgress size="lg"/></Grid> : <Card>

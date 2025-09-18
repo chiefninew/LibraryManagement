@@ -16,14 +16,14 @@ const visuallyHidden = {
   clip: 'rect(0 0 0 0)',
 };
 
-BorrowalListHead.propTypes = {
+LogsListHead.propTypes = {
   order: PropTypes.oneOf(['asc', 'desc']),
   orderBy: PropTypes.string,
   headLabel: PropTypes.array,
   onRequestSort: PropTypes.func,
 };
 
-export default function BorrowalListHead({
+export default function LogsListHead({
                                            order,
                                            orderBy,
                                            headLabel,

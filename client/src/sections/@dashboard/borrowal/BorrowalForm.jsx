@@ -18,6 +18,7 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import Iconify from "../../../components/iconify";
 import { useAuth } from "../../../hooks/useAuth";
+import { apiUrl } from "../../../constants";
 
 const BorrowalForm = ({
                         handleAddBorrowal,
@@ -33,7 +34,7 @@ const BorrowalForm = ({
   const [books, setBooks] = useState([]);
 
   const getAllMembers = () => {
-    axios.get('https://sma-library.duckdns.org/api/user/getAllMembers')
+    axios.get(`${baseURL}/user/getAllMembers`)
       .then((response) => {
         // handle success
         console.log(response.data)
@@ -52,7 +53,7 @@ const BorrowalForm = ({
   }
 
   const getAllBooks = () => {
-    axios.get('https://sma-library.duckdns.org/api/book/getAll')
+    axios.get(`${baseURL}/book/getAll`)
       .then((response) => {
         // handle success
         console.log(response.data)

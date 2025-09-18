@@ -11,6 +11,9 @@ RUN npm install --only=production
 # Copy source code
 COPY . .
 
+ARG BASE_URL
+ENV REACT_APP_BASE_URL=$BASE_URL
+
 # Expose the port (change if needed)
 EXPOSE 3000
 
