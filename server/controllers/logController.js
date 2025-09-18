@@ -42,7 +42,7 @@ const getAllLogs = async (req, res) => {
       filter.section = { $regex: section, $options: "i" };
     }
 
-    const logs = await Log.find(filter).sort({ date: -1 });
+    const logs = await Log.find(filter).sort({ createdAt: -1 });
 
     return res.status(200).json({
       success: true,
