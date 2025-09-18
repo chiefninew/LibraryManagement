@@ -4,6 +4,7 @@ const routes = {
   AUTHOR: "author",
   AUTH: "auth",
   BOOK: "book",
+  LOGS: "log",
   BORROWAL: "borrowal",
   GENRE: "genre",
   USER: "user"

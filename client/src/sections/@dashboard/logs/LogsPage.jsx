@@ -35,11 +35,13 @@ import { apiUrl, methods, routes } from "../../../constants";
 
 // ----------------------------------------------------------------------
 
-const TABLE_HEAD = [{ id: "memberName", label: "Member Name", alignRight: false },
-  { id: "bookName", label: "Book Name", alignRight: false },
-  { id: "borrowedDate", label: "Borrowed On", alignRight: false },
-  { id: "dueDate", label: "Due On", alignRight: false },
-  { id: "status", label: "Status", alignRight: false },
+const TABLE_HEAD = [{ id: "date", label: "DATE", alignRight: false },
+  { id: "name", label: "NAME", alignRight: false },
+  { id: "grade", label: "GRADE", alignRight: false },
+  { id: "section", label: "SECTION", alignRight: false },
+  { id: "purpose", label: "PURPOSE", alignRight: false },
+  { id: "timeIn", label: "TIME-IN", alignRight: false },
+  { id: "timeOut", label: "TIME-OUT", alignRight: false },
   { id: "", label: "", alignRight: true }, { id: "", label: "", alignRight: false }];
 
 
@@ -56,15 +58,17 @@ const LogsPage = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   // Data
-  const [borrowal, setBorrowal] = useState({
-    bookId: "",
-    memberId: "",
-    borrowedDate: "",
-    dueDate: "",
-    status: ""
+  const [log, setLog] = useState({
+    date: "",
+    name: "",
+    grade: "",
+    section: "",
+    purpose: "",
+    timeIn: "",
+    timeOut: ""
   })
-  const [borrowals, setBorrowals] = useState([]);
-  const [selectedBorrowalId, setSelectedBorrowalId] = useState(null)
+  const [logs, setLogs] = useState([]);
+  const [selectedLogId, setSelectedLogId] = useState(null)
   const [isTableLoading, setIsTableLoading] = useState(true)
   const [isMenuOpen, setIsMenuOpen] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -73,22 +77,18 @@ const LogsPage = () => {
 
   // Load data on initial page load
   useEffect(() => {
-    getAllBorrowals();
+    getAllLogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // API operations=
 
-  const getAllBorrowals = () => {
-    axios.get(apiUrl(routes.BORROWAL, methods.GET_ALL))
+  const getAllLogs = () => {
+    axios.get(apiUrl(routes.LOGS, methods.GET_ALL))
       .then((response) => {
         // handle success
         console.log(response.data)
-        if (user.isAdmin) {
-          setBorrowals(response.data.borrowalsList)
-        } else {
-          setBorrowals(response.data.borrowalsList.filter((borrowal) => user._id === borrowal.memberId))
-        }
+        setLogs(response.data.logsList)
         setIsTableLoading(false)
       })
       .catch((error) => {
@@ -97,13 +97,17 @@ const LogsPage = () => {
       })
   }
 
-  const addBorrowal = () => {
-    axios.post(apiUrl(routes.BORROWAL, methods.POST), borrowal)
+  const addLog = () => {
+    axios.post(apiUrl(routes.LOGS, methods.POST), {
+      ...log,
+      date: new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Manila" }),
+      timeIn: new Date().toLocaleString("en-US", { timeZone: "Asia/Manila" })
+    })
       .then((response) => {
-        toast.success("Borrowal added");
+        toast.success("Log added");
         console.log(response.data);
         handleCloseModal();
-        getAllBorrowals();
+        getAllLogs();
         clearForm();
       })
       .catch((error) => {
@@ -112,14 +116,14 @@ const LogsPage = () => {
       });
   }
 
-  const updateBorrowal = () => {
-    axios.put(apiUrl(routes.BORROWAL, methods.PUT, selectedBorrowalId), borrowal)
+  const updateLog = () => {
+    axios.put(apiUrl(routes.LOGS, methods.PUT, selectedLogId), log)
       .then((response) => {
-        toast.success("Borrowal updated");
+        toast.success("Log updated");
         console.log(response.data);
         handleCloseModal();
         handleCloseMenu();
-        getAllBorrowals();
+        getAllLogs();
         clearForm();
       })
       .catch((error) => {
@@ -128,14 +132,30 @@ const LogsPage = () => {
       });
   }
 
-  const deleteBorrowal = () => {
-    axios.delete(apiUrl(routes.BORROWAL, methods.PUT, selectedBorrowalId))
+  const timeOut = (log) => {
+    axios.put(apiUrl(routes.LOGS, methods.PUT, log._id), log)
       .then((response) => {
-        toast.success("Borrowal deleted");
+        toast.success("Log updated");
+        console.log(response.data);
+        handleCloseModal();
+        handleCloseMenu();
+        getAllLogs();
+        clearForm();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Something went wrong, please try again")
+      });
+  }
+
+  const deleteLog = () => {
+    axios.delete(apiUrl(routes.LOGS, methods.DELETE, selectedLogId))
+      .then((response) => {
+        toast.success("Log deleted");
         handleCloseDialog();
         handleCloseMenu();
         console.log(response.data);
-        getAllBorrowals();
+        getAllLogs();
       })
       .catch((error) => {
         console.log(error);
@@ -143,18 +163,20 @@ const LogsPage = () => {
       });
   }
 
-  const getSelectedBorrowalDetails = () => {
-    const selectedBorrowals = borrowals.find((element) => element._id === selectedBorrowalId)
-    setBorrowal(selectedBorrowals)
+  const getSelectedLogDetails = () => {
+    const selectedLogs = logs.find((element) => element._id === selectedLogId)
+    setLog(selectedLogs)
   }
 
   const clearForm = () => {
-    setBorrowal({
-      bookId: "",
-      memberId: "",
-      borrowedDate: "",
-      dueDate: "",
-      status: ""
+    setLog({
+      date: "",
+      name: "",
+      grade: "",
+      section: "",
+      purpose: "",
+      timeIn: "",
+      timeOut: ""
     })
   }
 
@@ -181,7 +203,7 @@ const LogsPage = () => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-    setBorrowal(applySortFilter(borrowal, getComparator(order, orderBy), filterName));
+    setLog(applySortFilter(log, getComparator(order, orderBy), filterName));
   };
 
   const handleChangePage = (event, newPage) => {
@@ -206,7 +228,6 @@ const LogsPage = () => {
       <title>Logs</title>
     </Helmet>
 
-
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h3" gutterBottom>
@@ -216,39 +237,54 @@ const LogsPage = () => {
           setIsUpdateForm(false);
           handleOpenModal();
         }} startIcon={<Iconify icon="eva:plus-fill"/>}>
-          New Logs
+          New Log
         </Button>
       </Stack>
       {isTableLoading ? <Grid style={{"textAlign": "center"}}><CircularProgress size="lg"/></Grid> : <Card>
         <Scrollbar>
-          {borrowals.length > 0 ? <TableContainer sx={{minWidth: 800}}>
+          {logs.length > 0 ? <TableContainer sx={{minWidth: 800}}>
             <Table>
               <LogsListHead
                 order={order}
                 orderBy={orderBy}
                 headLabel={TABLE_HEAD}
-                rowCount={borrowal.length}
+                rowCount={log.length}
                 onRequestSort={handleRequestSort}
               /><TableBody>
-              {borrowals.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((borrowal) => <TableRow hover key={borrowal._id} tabIndex={-1}>
-
-
-                  <TableCell align="left"> {borrowal.member.name} </TableCell>
-
-                  <TableCell align="left">{borrowal.book.name}</TableCell>
-                  <TableCell align="left"> {(new Date(borrowal.borrowedDate)).toLocaleDateString("en-US")} </TableCell>
-
-                  <TableCell align="left">{(new Date(borrowal.dueDate)).toLocaleDateString("en-US")}</TableCell>
-
-                  <TableCell align="left">{borrowal.status}</TableCell>
-
+              {logs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((log) => <TableRow hover key={log._id} tabIndex={-1}>
+                  <TableCell align="left"> {(new Date(log.date)).toLocaleDateString("en-US")}  </TableCell>
+                  <TableCell align="left">{log.name}</TableCell>
+                  <TableCell align="left">{log.grade}</TableCell>
+                  <TableCell align="left">{log.section}</TableCell>
+                  <TableCell align="left">{log.purpose}</TableCell>
                   <TableCell align="left">
-                    {(new Date(borrowal.dueDate) < new Date()) &&
-                      <Label color="error" sx={{padding: 2}}>Overdue</Label>}</TableCell>
-
+                    {log.timeIn ? new Date(log.timeIn).toLocaleTimeString("en-US", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                      timeZone: "Asia/Manila"
+                    }) : ""}
+                  </TableCell>
+                  <TableCell align="left">
+                    {log.timeOut ? new Date(log.timeOut).toLocaleTimeString("en-US", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                      timeZone: "Asia/Manila"
+                    }) : (
+                      <Button variant="contained" color="error" onClick={() => {
+                        timeOut({
+                          ...log,
+                          timeOut: new Date().toLocaleString("en-US", { timeZone: "Asia/Manila" })
+                        });
+                      }}>
+                        Time Out
+                      </Button>
+                    )}
+                  </TableCell>
                   <TableCell align="right">
                     <IconButton size="large" color="inherit" onClick={(e) => {
-                      setSelectedBorrowalId(borrowal._id)
+                      setSelectedLogId(log._id)
                       handleOpenMenu(e)
                     }}>
                       <Iconify icon={'eva:more-vertical-fill'}/>
@@ -257,13 +293,13 @@ const LogsPage = () => {
                 </TableRow>)}
             </TableBody></Table>
           </TableContainer> : <Alert severity="warning" color="warning">
-            No borrowals found
+            No logs found
           </Alert>}
         </Scrollbar>
-        {borrowals.length > 0 && <TablePagination
+        {logs.length > 0 && <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={borrowals.length}
+          count={logs.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -271,7 +307,6 @@ const LogsPage = () => {
         />}
       </Card>}
     </Container>
-
     <Popover
       open={Boolean(isMenuOpen)}
       anchorEl={isMenuOpen}
@@ -288,29 +323,34 @@ const LogsPage = () => {
     >
       <MenuItem onClick={() => {
         setIsUpdateForm(true);
-        getSelectedBorrowalDetails();
+        getSelectedLogDetails();
         handleCloseMenu();
         handleOpenModal();
       }}>
         <Iconify icon={'eva:edit-fill'} sx={{mr: 2}}/>
         Edit
       </MenuItem>
-
       <MenuItem sx={{color: 'error.main'}} onClick={handleOpenDialog}>
         <Iconify icon={'eva:trash-2-outline'} sx={{mr: 2}}/>
         Delete
       </MenuItem>
     </Popover>
-
-    <LogsForm isUpdateForm={isUpdateForm} isModalOpen={isModalOpen} handleCloseModal={handleCloseModal}
-                  id={selectedBorrowalId} borrowal={borrowal} setBorrowal={setBorrowal}
-                  handleAddBorrowal={addBorrowal} handleUpdateBorrowal={updateBorrowal}/>
-
-    <LogsDialog isDialogOpen={isDialogOpen} borrowalsId={selectedBorrowalId}
-                     handleDeleteBorrowal={deleteBorrowal}
-                     handleCloseDialog={handleCloseDialog}/>
-
-
+    <LogsForm
+      isUpdateForm={isUpdateForm}
+      isModalOpen={isModalOpen}
+      handleCloseModal={handleCloseModal}
+      id={selectedLogId}
+      log={log}
+      setLog={setLog}
+      handleAddLog={addLog}
+      handleUpdateLog={updateLog}
+    />
+    <LogsDialog
+      isDialogOpen={isDialogOpen}
+      logId={selectedLogId}
+      handleDeleteLog={deleteLog}
+      handleCloseDialog={handleCloseDialog}
+    />
   </>);
 }
 

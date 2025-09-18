@@ -1,12 +1,17 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   FormControl,
+  FormControlLabel,
+  FormLabel,
   Grid,
   InputLabel,
   MenuItem,
   Modal,
+  Radio,
+  RadioGroup,
   Select,
   Stack,
   TextField,
@@ -15,62 +20,29 @@ import {
 import PropTypes from "prop-types";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
-import Iconify from "../../../components/iconify";
-import { useAuth } from "../../../hooks/useAuth";
+import {useEffect, useState} from "react";
 import { baseURL } from "../../../constants";
+import Iconify from "../../../components/iconify";
 
-const LogsForm = ({
-                        handleAddBorrowal,
-                        handleUpdateBorrowal,
-                        isUpdateForm,
-                        isModalOpen,
-                        handleCloseModal,
-                        borrowal,
-                        setBorrowal,
-                      }) => {
-  const {user} = useAuth();
-  const [members, setMembers] = useState([]);
-  const [books, setBooks] = useState([]);
+const LogForm = ({
+                    isUpdateForm,
+                    isModalOpen,
+                    handleCloseModal,
+                    log,
+                    setLog,
+                    handleAddLog,
+                    handleUpdateLog
+                  }) => {
 
-  const getAllMembers = () => {
-    axios.get(`${baseURL}/user/getAllMembers`)
-      .then((response) => {
-        // handle success
-        console.log(response.data)
-        if (user.isAdmin) {
-          setMembers(response.data.membersList)
-        } else {
-          setMembers(response.data.membersList.filter((member) => user._id === member._id))
-        }
-        setBorrowal({...borrowal, memberId: user._id})
-      })
-      .catch((error) => {
-        // handle error
-        toast.error("Error fetching members")
-        console.log(error);
-      })
-  }
+  const [grades, setGrades] = useState([]);
 
-  const getAllBooks = () => {
-    axios.get(`${baseURL}/book/getAll`)
-      .then((response) => {
-        // handle success
-        console.log(response.data)
-        setBooks(response.data.booksList)
-      })
-      .catch((error) => {
-        // handle error
-        toast.error("Error fetching books")
-        console.log(error);
-      })
+  const getAllGrades = () => {
+    setGrades([1,2,3,4,5,6,7,8,9,10,11,12])
   }
 
   // Load data on initial page load
   useEffect(() => {
-    getAllMembers();
-    getAllBooks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getAllGrades();
   }, []);
 
   const style = {
@@ -85,7 +57,6 @@ const LogsForm = ({
     p: 4,
   };
 
-
   return (
     <Modal
       open={isModalOpen}
@@ -96,81 +67,62 @@ const LogsForm = ({
       <Box sx={style}>
         <Container>
           <Typography variant="h4" textAlign="center" paddingBottom={2} paddingTop={1}>
-            {isUpdateForm ? <span>Update</span> : <span>Add</span>} borrowal
+            {isUpdateForm ? <span>Update</span> : <span>Add</span>} log
           </Typography>
-          <Stack spacing={3} paddingY={2}>
+          <Stack spacing={3} paddingY={2} paddingX={3}
+                  height="600px"
+                  overflow="scroll">
 
-
-            <Grid container spacing={0} sx={{paddingBottom: "4px"}}>
-              <Grid item xs={12} md={6} paddingRight={1}>
-                <FormControl sx={{m: 0}} fullWidth>
-                  <InputLabel id="member-label">Member</InputLabel>
-                  <Select
-                    required
-                    disabled={!user.isAdmin}
-                    labelId="member-label"
-                    id="member"
-                    value={borrowal.memberId}
-                    label="Member"
-                    onChange={(e) => setBorrowal({...borrowal, memberId: e.target.value})}>
-                    {
-                      members.map((member) => <MenuItem key={member._id}
-                                                        value={member._id}>{member.name}</MenuItem>)
-                    }
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} md={6} paddingLeft={1}>
-                <FormControl sx={{m: 0}} fullWidth>
-                  <InputLabel id="author-label">Book</InputLabel>
-                  <Select
-                    required
-                    labelId="book-label"
-                    id="book"
-                    value={borrowal.bookId}
-                    label="Book"
-                    onChange={(e) => setBorrowal({...borrowal, bookId: e.target.value})}>
-                    {
-                      books.filter((book) => book.isAvailable).map((book) => <MenuItem key={book._id}
-                                                 value={book._id}>{book.name}</MenuItem>)
-                    }
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
-
-            <Grid container spacing={0} sx={{paddingBottom: "4px"}}>
-              <Grid item xs={12} md={6} paddingRight={1}>
-                <TextField fullWidth name="borrowedDate" label="Borrowed date" type="date" value={borrowal.borrowedDate}
-                           required
-                           InputLabelProps={{shrink: true}}
-                           onChange={(e) => setBorrowal({...borrowal, borrowedDate: e.target.value})}/>
-              </Grid>
-              <Grid item xs={12} md={6} paddingLeft={1}>
-                <TextField fullWidth name="dueDate" label="Due date" type="date" value={borrowal.dueDate} required
-                           InputLabelProps={{shrink: true}}
-                           onChange={(e) => setBorrowal({...borrowal, dueDate: e.target.value})}/>
-              </Grid>
-            </Grid>
-
-            <TextField fullWidth name="status" label="Status" type="text" value={borrowal.status}
-                       onChange={(e) => setBorrowal({...borrowal, status: e.target.value})}/>
-
-
+            <TextField
+              name="name"
+              label="Name"
+              value={log.name}
+              autoFocus
+              required
+              onChange={(e) => setLog({...log, name: e.target.value})}
+            />
+            <FormControl sx={{m: 1}}>
+              <InputLabel id="author-label">Grade</InputLabel>
+              <Select
+                required
+                labelId="grade-label"
+                id="grade"
+                value={log.grade}
+                label="Grade"
+                onChange={(e) => setLog({...log, grade: e.target.value})}>
+                {
+                  grades.map((g) => <MenuItem key={g} value={g}>{g}</MenuItem>)
+                }
+              </Select>
+            </FormControl>
+            <TextField
+              name="section"
+              label="Section"
+              value={log.section}
+              required
+              onChange={(e) => setLog({...log, section: e.target.value})}
+            />
+            <TextField
+              name="purpose"
+              label="Purpose"
+              value={log.purpose}
+              multiline
+              required
+              rows={6}
+              maxRows={4}
+              onChange={(e) => setLog({...log, purpose: e.target.value})}
+            />
             <br/>
-            <Box textAlign="center">
-              <Box textAlign="center" paddingBottom={2}>
-                <Button size="large" variant="contained"
-                        onClick={isUpdateForm ? handleUpdateBorrowal : handleAddBorrowal}
-                        startIcon={<Iconify icon="bi:check-lg"/>} style={{marginRight: "12px"}}>
-                  Submit
-                </Button>
+            <Box textAlign="center" paddingBottom={2}>
+              <Button size="large" variant="contained" onClick={isUpdateForm ? handleUpdateLog : handleAddLog}
+                      startIcon={<Iconify icon="bi:check-lg"/>} style={{marginRight: "12px"}}>
+                Submit
+              </Button>
 
-                <Button size="large" color="inherit" variant="contained" onClick={handleCloseModal}
-                        startIcon={<Iconify icon="charm:cross"/>} style={{marginLeft: "12px"}}>
-                  Cancel
-                </Button>
-              </Box>
+              <Button size="large" color="inherit" variant="contained" onClick={handleCloseModal}
+                      startIcon={<Iconify icon="charm:cross"/>} style={{marginLeft: "12px"}}>
+                Cancel
+              </Button>
             </Box>
           </Stack>
         </Container>
@@ -179,14 +131,14 @@ const LogsForm = ({
   );
 }
 
-LogsForm.propTypes = {
+LogForm.propTypes = {
   isUpdateForm: PropTypes.bool,
   isModalOpen: PropTypes.bool,
   handleCloseModal: PropTypes.func,
-  borrowal: PropTypes.object,
-  setBorrowal: PropTypes.func,
-  handleAddBorrowal: PropTypes.func,
-  handleUpdateBorrowal: PropTypes.func
+  log: PropTypes.object,
+  setLog: PropTypes.func,
+  handleAddLog: PropTypes.func,
+  handleUpdateLog: PropTypes.func
 };
 
-export default LogsForm
+export default LogForm
