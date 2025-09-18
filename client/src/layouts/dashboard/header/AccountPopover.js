@@ -3,6 +3,7 @@ import { alpha } from "@mui/material/styles";
 import { Avatar, Box, Divider, IconButton, MenuItem, Popover, Typography } from "@mui/material";
 import axios from "axios";
 import { useAuth } from "../../../hooks/useAuth";
+import { baseURL } from "../../../constants";
 
 export default function AccountPopover() {
   const { user } = useAuth();

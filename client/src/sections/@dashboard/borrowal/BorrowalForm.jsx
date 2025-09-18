@@ -18,7 +18,7 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import Iconify from "../../../components/iconify";
 import { useAuth } from "../../../hooks/useAuth";
-import { apiUrl } from "../../../constants";
+import { baseURL } from "../../../constants";
 
 const BorrowalForm = ({
                         handleAddBorrowal,
