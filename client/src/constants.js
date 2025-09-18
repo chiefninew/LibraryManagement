@@ -1,4 +1,4 @@
-const baseURL = process.env.REACT_APP_BASE_URL
+const baseURL = "https://sma-library.duckdns.org/api"
 
 const routes = {
   AUTHOR: "author",
