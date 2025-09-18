@@ -11,6 +11,7 @@ require("dotenv").config();
 
 // Import routers
 const authRouter = require("./routes/authRouter");
+const logRouter = require("./routes/logRouter");
 const bookRouter = require("./routes/bookRouter");
 const authorRouter = require("./routes/authorRouter");
 const borrowalRouter = require("./routes/borrowalRouter");
@@ -67,6 +68,7 @@ mongoose
 
 // --- Routes ---
 app.use("/auth", authRouter);
+app.use("/log", logRouter);
 app.use("/book", bookRouter);
 app.use("/author", authorRouter);
 app.use("/borrowal", borrowalRouter);
