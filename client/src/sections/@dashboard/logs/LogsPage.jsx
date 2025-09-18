@@ -278,7 +278,7 @@ const LogsPage = () => {
                           timeOut: new Date().toLocaleString("en-US", { timeZone: "Asia/Manila" })
                         });
                       }}>
-                        Time Out
+                        Mark Out
                       </Button>
                     )}
                   </TableCell>
