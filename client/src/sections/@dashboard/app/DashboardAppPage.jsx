@@ -83,12 +83,12 @@ export default function DashboardAppPage() {
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
-              title="Monthly Visits"
+              title="Borrowals"
               chartData={[
-                { label: 'Grade 1', value: 4344 },
-                { label: 'Grade 2', value: 5435 },
-                { label: 'Grade 3', value: 1443 },
-                { label: 'Grade 4', value: 4443 },
+                { label: 'Fiction', value: 4344 },
+                { label: 'Non-Fiction', value: 5435 },
+                { label: 'Science', value: 1443 },
+                { label: 'History', value: 4443 },
               ]}
               chartColors={[
                 theme.palette.primary.main,
