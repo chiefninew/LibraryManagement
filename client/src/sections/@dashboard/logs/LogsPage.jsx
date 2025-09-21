@@ -20,7 +20,8 @@ import {
   TableContainer,
   TablePagination,
   TableRow,
-  Typography
+  Typography,
+  TextField
 } from "@mui/material";
 import { useAuth } from "../../../hooks/useAuth";
 import Label from "../../../components/label";
@@ -60,6 +61,8 @@ const LogsPage = () => {
   // Data
   const [log, setLog] = useState({
     date: "",
+    firstName: "",
+    lastName: "",
     name: "",
     grade: "",
     section: "",
@@ -74,17 +77,18 @@ const LogsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isUpdateForm, setIsUpdateForm] = useState(false)
+  const [logDate, setLogDate] = useState(new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Manila" }))
 
   // Load data on initial page load
   useEffect(() => {
     getAllLogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [logDate]);
 
   // API operations=
 
   const getAllLogs = () => {
-    axios.get(apiUrl(routes.LOGS, methods.GET_ALL))
+    axios.get(`${apiUrl(routes.LOGS, methods.GET_ALL)}?date=${logDate}`)
       .then((response) => {
         // handle success
         console.log(response.data)
@@ -100,7 +104,7 @@ const LogsPage = () => {
   const addLog = () => {
     axios.post(apiUrl(routes.LOGS, methods.POST), {
       ...log,
-      date: new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Manila" }),
+      date: logDate,
       timeIn: new Date().toLocaleString("en-US", { timeZone: "Asia/Manila" })
     })
       .then((response) => {
@@ -171,6 +175,8 @@ const LogsPage = () => {
   const clearForm = () => {
     setLog({
       date: "",
+      firstName: "",
+      lastName: "",
       name: "",
       grade: "",
       section: "",
@@ -240,6 +246,15 @@ const LogsPage = () => {
           New Log
         </Button>
       </Stack>
+      <TextField
+        name="logDate"
+        label="Log date"
+        type="date"
+        value={logDate}
+        onChange={(e) => setLogDate(e.target.value)}
+        sx={{mb: 3}} 
+        InputLabelProps={{shrink: true}}
+      />
       {isTableLoading ? <Grid style={{"textAlign": "center"}}><CircularProgress size="lg"/></Grid> : <Card>
         <Scrollbar>
           {logs.length > 0 ? <TableContainer sx={{minWidth: 800}}>

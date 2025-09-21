@@ -69,18 +69,37 @@ const LogForm = ({
           <Typography variant="h4" textAlign="center" paddingBottom={2} paddingTop={1}>
             {isUpdateForm ? <span>Update</span> : <span>Add</span>} log
           </Typography>
-          <Stack spacing={3} paddingY={2} paddingX={3}
-                  height="600px"
-                  overflow="scroll">
-
-            <TextField
-              name="name"
-              label="Name"
-              value={log.name}
-              autoFocus
-              required
-              onChange={(e) => setLog({...log, name: e.target.value})}
-            />
+          <Stack
+            spacing={3}
+            paddingY={2}
+            paddingX={3}
+            height="600px"
+            overflow="scroll"
+          >
+            
+            <Grid container spacing={0} sx={{paddingBottom: "4px"}}>
+              <Grid item xs={12} md={6} paddingRight={1}>
+                <TextField
+                  fullWidth
+                  name="firstName"
+                  label="First Name"
+                  type="text"
+                  value={log.firstName}
+                  required
+                  onChange={(e) => setLog({ ...log, firstName: e.target.value })} />
+              </Grid>
+              <Grid item xs={12} md={6} paddingLeft={1}>
+                <TextField
+                  fullWidth
+                  name="lastName"
+                  label="Last Name"
+                  type="text"
+                  value={log.lastName}
+                  required
+                  onChange={(e) => setLog({ ...log, lastName: e.target.value })}
+                />
+              </Grid>
+            </Grid>
             <FormControl sx={{m: 1}}>
               <InputLabel id="author-label">Grade</InputLabel>
               <Select
