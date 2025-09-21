@@ -55,7 +55,8 @@ const getAllLogs = async (req, res) => {
 
 const addLog = async (req, res) => {
   const newLog = {
-    ...req.body
+    ...req.body,
+    name: req.body.lastName + ', ' + req.body.firstName
   }
   console.log(newLog)
   Log.create(newLog, (err, log) => {
@@ -72,7 +73,10 @@ const addLog = async (req, res) => {
 
 const updateLog = async (req, res) => {
   const logId = req.params.id
-  const updatedLog = req.body
+  const updatedLog = {
+    ...req.body,
+    name: req.body.lastName + ', ' + req.body.firstName
+  }
 
   Log.findByIdAndUpdate(logId, updatedLog, (err, log) => {
     if (err) {

@@ -5,6 +5,14 @@ const logsSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true
