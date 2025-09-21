@@ -61,21 +61,75 @@ export default function DashboardAppPage() {
               chartData={[
                 {
                   name: 'Grade 1',
-                  type: 'column',
+                  type: 'line',
                   fill: 'solid',
-                  data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
+                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
                 },
                 {
                   name: 'Grade 2',
-                  type: 'area',
-                  fill: 'gradient',
-                  data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
+                  type: 'line',
+                  fill: 'solid',
+                  data: [20, 15, 26, 20, 35, 25, 54, 42, 49, 26, 29],
                 },
                 {
                   name: 'Grade 3',
                   type: 'line',
                   fill: 'solid',
-                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+                  data: [27, 12, 20, 27, 33, 23, 43, 32, 43, 22, 19],
+                },
+                {
+                  name: 'Grade 4',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [17, 22, 16, 17, 26, 12, 33, 22, 29, 12, 11],
+                },
+                {
+                  name: 'Grade 5',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [10, 8, 12, 10, 15, 8, 20, 15, 12, 8, 7],
+                },
+                {
+                  name: 'Grade 6',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [5, 4, 6, 5, 8, 4, 10, 8, 6, 4, 3],
+                },
+                {
+                  name: 'Grade 7',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [4, 3, 5, 4, 6, 3, 8, 6, 5, 3, 2],
+                },
+                {
+                  name: 'Grade 8',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [3, 2, 4, 3, 5, 2, 6, 5, 4, 2, 1],
+                },
+                {
+                  name: 'Grade 9',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [2, 1, 3, 2, 4, 1, 5, 4, 3, 1, 1],
+                },
+                {
+                  name: 'Grade 10',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [1, 1, 2, 1, 3, 1, 4, 3, 2, 1, 1],
+                },
+                {
+                  name: 'Grade 11',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [1, 0, 1, 1, 2, 0, 3, 2, 1, 0, 0],
+                },
+                {
+                  name: 'Grade 12',
+                  type: 'line',
+                  fill: 'solid',
+                  data: [0, 0, 1, 0, 1, 0, 2, 1, 1, 0, 0],
                 },
               ]}
             />
