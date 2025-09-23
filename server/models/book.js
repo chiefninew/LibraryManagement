@@ -25,6 +25,10 @@ const bookSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  deweyClass: {
+    type: String, // Example: "510.1"
+    required: false
+  },
   photoUrl: {
     type: String,
     required: false
