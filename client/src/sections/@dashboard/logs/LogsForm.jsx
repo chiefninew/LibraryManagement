@@ -23,6 +23,7 @@ import toast from "react-hot-toast";
 import {useEffect, useState} from "react";
 import { baseURL } from "../../../constants";
 import Iconify from "../../../components/iconify";
+import allSections from './sections.json';
 
 const LogForm = ({
                     isUpdateForm,
@@ -35,6 +36,14 @@ const LogForm = ({
                   }) => {
 
   const [grades, setGrades] = useState([]);
+  const [sections, setSections] = useState([])
+
+  useEffect(() => {
+    if (log && log.grade) {
+      const userSections = allSections[log.grade];
+      setSections(userSections || []);
+    }
+  }, [log]);
 
   const getAllGrades = () => {
     setGrades([1,2,3,4,5,6,7,8,9,10,11,12])
@@ -108,19 +117,38 @@ const LogForm = ({
                 id="grade"
                 value={log.grade}
                 label="Grade"
-                onChange={(e) => setLog({...log, grade: e.target.value})}>
+                onChange={(e) => setLog({...log, grade: e.target.value, section: ''})}>
                 {
                   grades.map((g) => <MenuItem key={g} value={g}>{g}</MenuItem>)
                 }
               </Select>
             </FormControl>
-            <TextField
-              name="section"
-              label="Section"
-              value={log.section}
-              required
-              onChange={(e) => setLog({...log, section: e.target.value})}
-            />
+            {
+              sections.length > 0 ? (
+                <FormControl sx={{m: 1}}>
+                  <InputLabel id="author-label">Section</InputLabel>
+                  <Select
+                    required
+                    labelId="section-label"
+                    id="section"
+                    value={log.section}
+                    label="Section"
+                    onChange={(e) => setLog({...log, section: e.target.value})}>
+                    {
+                      sections.map((s) => <MenuItem key={s} value={s}>{s}</MenuItem>)
+                    }
+                  </Select>
+                </FormControl>
+              ) : (
+                <TextField
+                  name="section"
+                  label="Section"
+                  value={log.section}
+                  required
+                  onChange={(e) => setLog({...log, section: e.target.value})}
+                />
+              )
+            }
             <TextField
               name="purpose"
               label="Purpose"

@@ -40,7 +40,15 @@ const BookPage = () => {
   const {user} = useAuth();
   // Data
   const [book, setBook] = useState({
-    id: "", name: "", isbn: "", summary: "", isAvailable: true, authorId: "", genreId: "", photoUrl: ""
+    id: "",
+    name: "",
+    deweyClass: "",
+    isbn: "",
+    summary: "",
+    isAvailable: true,
+    authorId: "",
+    genreId: "",
+    photoUrl: ""
   })
   const [books, setBooks] = useState([]);
   const [selectedBookId, setSelectedBookId] = useState(null)
@@ -119,7 +127,17 @@ const BookPage = () => {
   }
 
   const clearForm = () => {
-    setBook({id: "", name: "", isbn: "", summary: "", isAvailable: true, authorId: "", genreId: "", photoUrl: ""})
+    setBook({
+      id: "",
+      name: "",
+      deweyClass: "",
+      isbn: "",
+      summary: "",
+      isAvailable: true,
+      authorId: "",
+      genreId: "",
+      photoUrl: ""
+    })
   }
 
   // Handler functions
@@ -228,7 +246,7 @@ const BookPage = () => {
                     <Label color={book.isAvailable ? "success" : "error"}
                            sx={{padding: 2}}>{book.isAvailable ? 'Available' : 'Not available'}</Label>
 
-                    <Typography variant="subtitle2" textAlign="center" paddingTop={1}>ISBN: {book.isbn}</Typography>
+                    <Typography variant="subtitle2" textAlign="center" paddingTop={1}>{book.deweyClass}</Typography>
                     <Typography variant="body2">{book.summary}</Typography>
                   </Stack>
                 </Card>

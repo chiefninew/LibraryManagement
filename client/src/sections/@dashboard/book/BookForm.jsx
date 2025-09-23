@@ -107,6 +107,8 @@ const BookForm = ({
 
                 <TextField name="name" label="Book name" value={book.name} autoFocus required
                            onChange={(e) => setBook({...book, name: e.target.value})}/>
+                <TextField name="deweyClass" label="Dewey Class" value={book.deweyClass} required
+                           onChange={(e) => setBook({...book, deweyClass: e.target.value})}/>
                 <TextField name="isbn" label="ISBN" value={book.isbn} required
                            onChange={(e) => setBook({...book, isbn: e.target.value})}/>
 
